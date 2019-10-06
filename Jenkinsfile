@@ -8,12 +8,6 @@ pipeline {
         stage ('Install Requirements') {
             steps {
                 sh """
-                    echo ${SHELL}
-                    [ -d venv ] && rm -rf venv
-                    #virtualenv --python=python2.7 venv
-                    virtualenv venv
-                    #. venv/bin/activate
-                    export PATH=${VIRTUAL_ENV}/bin:${PATH}
                     pip install --upgrade pip
                     pip install -r requirements.txt -r dev-requirements.txt
                     make clean
@@ -24,17 +18,13 @@ pipeline {
         stage ('Check Style') {
             steps {
                 sh """
-                    #. venv/bin/activate
-                    [ -d report ] || mkdir report
-                    export PATH=${VIRTUAL_ENV}/bin:${PATH}
+                    mkdir report
                     make check || true
                 """
                 sh """
-                    export PATH=${VIRTUAL_ENV}/bin:${PATH}
                     make flake8 | tee report/flake8.log || true
                 """
                 sh """
-                    export PATH=${VIRTUAL_ENV}/bin:${PATH}
                     make pylint | tee report/pylint.log || true
                 """
                 step([$class: 'WarningsPublisher',
@@ -55,8 +45,6 @@ pipeline {
         stage ('Unit Tests') {
             steps {
                 sh """
-                    #. venv/bin/activate
-                    export PATH=${VIRTUAL_ENV}/bin:${PATH}
                     make unittest || true
                 """
             }
@@ -76,10 +64,6 @@ pipeline {
         stage ('System Tests') {
             steps {
                 sh """
-                    #. venv/bin/activate
-                    export PATH=${VIRTUAL_ENV}/bin:${PATH}
-                    // Write file containing test node connection information if needed.
-                    // writeFile file: "test/fixtures/nodes.yaml", text: "---\n- node: <some-ip>\n"
                     make systest || true
                 """
             }
@@ -99,8 +83,6 @@ pipeline {
         stage ('Docs') {
             steps {
                 sh """
-                    #. venv/bin/activate
-                    export PATH=${VIRTUAL_ENV}/bin:${PATH}
                     PYTHONPATH=. pdoc --html --html-dir docs --overwrite env.projectName
                 """
             }
@@ -116,9 +98,15 @@ pipeline {
             }
         }
 
+        stage ('List directory') {
+            steps {
+                sh 'ls -R .'
+            }
+        }
+
         stage ('Cleanup') {
             steps {
-                sh 'rm -rf venv'
+                sh 'echo DONE'
             }
         }
     }
