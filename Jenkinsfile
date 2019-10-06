@@ -4,7 +4,9 @@ pipeline {
     agent any
 
     environment {
-        projectName = 'ProjectTemplate'
+        projectName = 'python-jenkinsfile-testing'
+        emailTo = 'briankanya@gmail.com'
+        emailFrom = 'eosplus-dev+jenkins@arista.com'
     }
 
     stages {
@@ -101,12 +103,6 @@ pipeline {
                         reportName: 'Module Documentation'
                     ]
                 }
-            }
-        }
-
-        stage ('Cleanup') {
-            steps {
-                sh 'ls -R .'
             }
         }
     }
