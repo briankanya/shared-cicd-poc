@@ -16,6 +16,7 @@ pipeline {
                     dpkg --configure -a
                     apt install -y python3-pip
                     pip3 install -r requirements.txt -r dev-requirements.txt
+                    mkdir -p report
                     make clean
                 """
             }
