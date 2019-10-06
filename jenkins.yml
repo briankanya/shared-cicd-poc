@@ -1,0 +1,12 @@
+jenkins:
+  numExecutors: 1
+unclassified:
+  globallibraries:
+    libraries:
+      - defaultVersion: "master"
+        name: "jenkins-pipeline"
+        retriever:
+          modernSCM:
+            scm:
+              git:
+                remote: "https://github.com/jenkinsci/pipeline-plugin.git"
