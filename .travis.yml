@@ -1,5 +1,15 @@
 language: minimal # This uses the minimal Travis CI image as seen here https://docs.travis-ci.com/user/languages/minimal-and-generic/
 services:
   - docker
+cache:
+  directories:
+    - docker-cache
+before_script:
+  - |
+    filename=docker-cache/saved_images.tar
+    if [[ -f "$filename" ]]; then docker load < "$filename"; fi
+    mkdir -p docker-cache
+    docker pull <IMAGE_NAME_HERE>
+    docker save -o "$filename" <IMAGE_NAME_HERE>
 script: docker run -v /var/run/docker.sock:/var/run/docker.sock -v ${PWD}:/workspace -v /tmp -e CASC_JENKINS_CONFIG=/workspace/jenkins.yml -e BRANCH_NAME=$TRAVIS_BRANCH ppiper/jenkinsfile-runner
 # Need to explore using https://github.com/jenkinsci/jenkinsfile-runner
