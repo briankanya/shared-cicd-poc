@@ -15,8 +15,7 @@ pipeline {
                     apt update -y
                     dpkg --configure -a
                     apt install -y python3-pip
-                    pip install --upgrade pip
-                    pip install -r requirements.txt -r dev-requirements.txt
+                    pip3 install -r requirements.txt -r dev-requirements.txt
                     make clean
                 """
             }
