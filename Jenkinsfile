@@ -12,7 +12,8 @@ pipeline {
         stage ('Install Requirements') {
             steps {
                 sh """
-                    apt-cache search pip
+                    apt update -y
+                    dpkg --configure -a
                     apt install -y python3-pip
                     pip install --upgrade pip
                     pip install -r requirements.txt -r dev-requirements.txt
