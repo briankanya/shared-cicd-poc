@@ -8,7 +8,7 @@ pipeline {
         stage ('Install Requirements') {
             steps {
                 sh """
-                    [ -d venv ] && rm -rf venv
+                    cat /etc/*release
                     #virtualenv --python=python2.7 venv
                     virtualenv venv
                     #. venv/bin/activate
