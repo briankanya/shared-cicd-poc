@@ -1,20 +1,17 @@
 language: minimal
 services:
-- docker
+  - docker
 cache:
   directories:
-  - docker-cache
+    - docker-cache
 before_script:
-- |
-  filename=docker-cache/saved_images.tar
-  if [[ -f "$filename" ]]; then docker load < "$filename"; fi
-  mkdir -p docker-cache
-  docker pull ppiper/jenkinsfile-runner
-  docker save -o "$filename" ppiper/jenkinsfile-runner
-script: docker run -v /var/run/docker.sock:/var/run/docker.sock -v ${PWD}:/workspace
+  - |
+    filename=docker-cache/saved_images.tar
+    if [[ -f "$filename" ]]; then docker load < "$filename"; fi
+    mkdir -p docker-cache
+    docker pull ppiper/jenkinsfile-runner
+    docker save -o "$filename" ppiper/jenkinsfile-runner
+script:
+  docker run -v /var/run/docker.sock:/var/run/docker.sock -v ${PWD}:/workspace
   -v /tmp -e CASC_JENKINS_CONFIG=/workspace/jenkins.yml -e BRANCH_NAME=$TRAVIS_BRANCH
   ppiper/jenkinsfile-runner
-env:
-  global:
-  - secure: x5zLZKgLMw5A4OJVByj5XR7uFCGqUkbDaYfzbU1dGTkw+DBmedbMp3b6jY8siACn5drPQoJz+g5V5U5o6utbd6hH/XZS7JrcoewEzdLbHr9qu3Ymi5ncJfEE+PDxbWOdYFVhDoTLSbyGgrfQWFphb/C25L4C/sqAQb5j/269h8+aZCrQBmAKTkJs+xt5ue4oLWMxkU5jXFlM5OZJXQRUuNfLoGqRUbeHx59lD8TSlFt0LFqZpuCFTESKB4FhaELAjnfddFO4mgckMcZFZwOV2ZloYQ2SBWdhyWA+I9af+TD/F13KmXL7YF4BC+aq1aIBUP2R1R7KIfIrIyy85Rje6TZu1bTHTlmU0xkEGLq+N6+ZePqXZ+lSO7mnRk4Hy+RQ6VEtefq46w+yZAow9CoV9F2ZoKeAX+dkZwyY1sP8CyAxan5kiVH0LwH7o1ade4hPOaLJX3ZdbZBdf2IOSDHgfe7tmWodVNRjwKUGL6301EPcLeJHyaC0K2tgQo2LChSCySoOya9h/Hlsm6tReR/n0AKgm4SZYs9Cp2kHrN5HXRn8FpP3Ig7V04b2++TCKl3CVNZ2K8U7cTcE4Xf8tTdfRKMSGNwFC9cfkPwtAvdE68ZJVzFnu+6dUbJwKoxtG3HituM5CEO6KsVnxt06Cgaa8Vom37A7USEHDsrkms4WQ2g=
-  - secure: 2TyxNMlyHIWyWmPeLZdXueAlb0MlVHtGyp2oaC4Euh5vI31QBrCl+ZWqigS1YTWHnMgp+yxoq3/JL3PVT1G1zpNFXtlWXkkvCYSMFFFptM27pkckvlKhMyzsfew/+ZG3yb+Zys7FFLVkmFR6o1hIaMvFxiVxI+bdL9kla0rmSzoauvgvrdWqxZNemXKcEDXShmn93EgJ3IhyU4HkyYq9UqVtuUavhjJQtLv6DkgPoJ6FETFagK3Hwysbu7WFE5DQ18zL+NE5WAqs4NbNosoFZDmnkPOlzzP4NSd6aBLGwLB7vRpkbqJPT1TW0+MYKuGMbjkyWxpX75zWn4bohx5VhtrmCJQUbHpYMKc7tnj0GapSVZojNlskFwZ8TROvH5TGSwD9vSzw3z4eaGbGqST/js6QrisHg79ryllrexVtjPzjkkv7EyYbrw9eTYZ9xIiLI+25TNHS8rQXvxPTT1aRwf2EArWiuSxfz5e9fJGW7rm48LstTl2NWvxi2GSEq0c3lSncmtwFiO50uT6v2lD13dPbHA6vz8UyVUAeXvAlwNeAbfWVb/5/e9RxMhVrNL5Tbm4NIVEXMMQz2dQbYeiAPWl2Agq69l1n+h+j24sXevYu4RhkeIGsS+vkanLv4CFujhLRA572u9JuF2mgRXWEm1nwMSmBE9HeJr92/3HT2kE=
