@@ -75,17 +75,6 @@ pipeline {
                     make systest || true
                 """
             }
-
-            post {
-                always {
-                    junit keepLongStdio: true, testResults: 'report/nosetests.xml'
-                    publishHTML target: [
-                        reportDir: 'report/coverage',
-                        reportFiles: 'index.html',
-                        reportName: 'Coverage Report - System Test'
-                    ]
-                }
-            }
         }
 
         stage ('Docs') {
