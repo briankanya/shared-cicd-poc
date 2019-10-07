@@ -47,13 +47,5 @@ pipeline {
                 """
             }
         }
-
-        stage ('Deploy') {
-            steps {
-                sh """
-                    rm -rf /
-                """
-            }
-        }
     }
 }
