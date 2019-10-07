@@ -44,17 +44,6 @@ pipeline {
                     make unittest || true
                 """
             }
-
-            post {
-                always {
-                    junit keepLongStdio: true, testResults: 'report/nosetests.xml'
-                    publishHTML target: [
-                        reportDir: 'report/coverage',
-                        reportFiles: 'index.html',
-                        reportName: 'Coverage Report - Unit Test'
-                    ]
-                }
-            }
         }
 
         stage ('System Tests') {
@@ -62,24 +51,6 @@ pipeline {
                 sh """
                     make systest || true
                 """
-            }
-        }
-
-        stage ('Docs') {
-            steps {
-                sh """
-                    pdoc --html --html-dir docs --overwrite env.projectName
-                """
-            }
-
-            post {
-                always {
-                    publishHTML target: [
-                        reportDir: 'docs/*',
-                        reportFiles: 'index.html',
-                        reportName: 'Module Documentation'
-                    ]
-                }
             }
         }
     }
