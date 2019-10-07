@@ -5,8 +5,8 @@ pipeline {
 
     environment {
         projectName = 'python-jenkinsfile-testing'
-        emailTo = 'briankanya@gmail.com'
-        emailFrom = 'eosplus-dev+jenkins@arista.com'
+        emailTo = ${EMAIL_TO}
+        emailFrom = ${EMAIL_FROM}
     }
 
     stages {
